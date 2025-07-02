@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.conestoga.outofthenest.mapper.UserMapper">
+
+    <select id="findByFirebaseUid" resultType="com.conestoga.outofthenest.model.User" parameterType="string">
+        SELECT id, firebase_uid, name, email
+        FROM users
+        WHERE firebase_uid = #{firebaseUid}
+    </select>
+
+    <insert id="insertUser" parameterType="com.conestoga.outofthenest.model.User" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO users (firebase_uid, name, email)
+        VALUES (#{firebaseUid}, #{name}, #{email})
+    </insert>
+
+    <update id="updateUser" parameterType="com.conestoga.outofthenest.model.User">
+        UPDATE users
+        SET name = #{name}, email = #{email}
+        WHERE id = #{id}
+    </update>
+
+</mapper>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.conestoga.outofthenest.mapper.FamilyMemberMapper">
+    <delete id="deleteByUserId">
+        DELETE FROM family_members WHERE user_id = #{userId}
+    </delete>
+
+    <insert id="insertFamilyMembers">
+        INSERT INTO family_members (user_id, type, age)
+        VALUES
+        <foreach collection="members" item="m" separator=",">
+            (#{m.userId}, #{m.type}, #{m.age})
+        </foreach>
+    </insert>
+</mapper>
