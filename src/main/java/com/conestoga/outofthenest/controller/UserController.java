@@ -5,13 +5,11 @@ import com.conestoga.outofthenest.model.FamilyMember;
 import com.conestoga.outofthenest.model.User;
 import com.conestoga.outofthenest.mapper.FamilyMemberMapper;
 import com.conestoga.outofthenest.mapper.UserMapper;
+import com.conestoga.outofthenest.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -24,6 +22,9 @@ public class UserController {
 
     @Autowired
     private UserMapper userMapper;
+
+    @Autowired
+    private UserService userService;
 
     @PostMapping("/createUser")
     public ResponseEntity<String> createUser(@RequestBody UserDTO dto, Authentication authentication) {
@@ -45,7 +46,11 @@ public class UserController {
 
         familyMemberMapper.insertFamilyMembers(members);
 
-        return ResponseEntity.ok("用户信息已更新");
+        return ResponseEntity.ok("User info updated successfully");
+    }
+    @GetMapping("/getUser")
+    public User getUser(@RequestParam String id) {
+        return userService.getUser(id);
     }
 }
 

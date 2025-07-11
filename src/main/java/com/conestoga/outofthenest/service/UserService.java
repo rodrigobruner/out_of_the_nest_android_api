@@ -21,4 +21,7 @@ public class UserService {
         }
         return user;
     }
+    public User getUser(String firebaseUid) {
+        return userMapper.getUserByFirebaseUid(firebaseUid);
+    }
 }
