@@ -13,5 +13,5 @@ server:
 
 logging:
   level:
-    org.mybatis.spring: DEBUG
-    org.apache.ibatis: DEBUG
+    org.mybatis.spring: INFO
+    org.apache.ibatis: INFO

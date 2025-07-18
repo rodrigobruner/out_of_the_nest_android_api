@@ -6,6 +6,7 @@ import com.conestoga.outofthenest.service.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -17,7 +18,11 @@ public class ReviewController {
 
     @PostMapping("/createReview")
     public Review createReview(@RequestBody Review review) {
-        return reviewService.createReview(review);
+        if (review.getDatetime() == null) {
+        review.setDatetime(LocalDateTime.now());
+        }
+        reviewService.createReview(review);
+        return review;
     }
 
     @GetMapping("/getReviewsByPlace")

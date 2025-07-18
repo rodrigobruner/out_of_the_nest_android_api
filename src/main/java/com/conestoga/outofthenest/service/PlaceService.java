@@ -1,15 +1,11 @@
 package com.conestoga.outofthenest.service;
 
-
 import com.conestoga.outofthenest.mapper.PlaceMapper;
 import com.conestoga.outofthenest.model.Place;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 @Service
 public class PlaceService {
@@ -29,8 +25,7 @@ public class PlaceService {
         return placeMapper.findById(id);
     }
 
-    public List<Place> getPlacesNear(Double lat, Double lng, Double delta, String filter) {
-        Set<String> types = Arrays.stream(filter.split(",")).collect(Collectors.toSet());
-        return placeMapper.findNearbyPlaces(lat, lng, delta, types);
+    public List<Place> getPlacesNear(double minLat, double maxLat, double minLng, double maxLng, List<String> filter, List<String> tags) {
+        return placeMapper.findNearbyPlaces(minLat, maxLat, minLng, maxLng, filter, tags);
     }
 }
