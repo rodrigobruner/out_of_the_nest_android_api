@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.conestoga.outofthenest.mapper.EventMapper">
+
+    <insert id="insertEvent">
+        INSERT INTO events (id, title, description, datetime, address)
+        VALUES (#{id}, #{title}, #{description}, #{datetime}, #{address})
+    </insert>
+
+    <insert id="insertAudienceTags">
+        INSERT INTO event_audience (event_id, audience_tag)
+        VALUES
+        <foreach collection="audienceTags" item="tag" separator=",">
+            (#{eventId}, #{tag})
+        </foreach>
+    </insert>
+
+    <select id="searchEvents" resultType="com.conestoga.outofthenest.model.Event">
+        SELECT DISTINCT e.*
+        FROM events e
+        LEFT JOIN event_audience ea ON e.id = ea.event_id
+        WHERE e.datetime BETWEEN #{startDate} AND #{endDate}
+        <if test="audience != null and audience.size() > 0">
+            AND ea.audience_tag IN
+            <foreach collection="audience" item="a" open="(" separator="," close=")">
+                #{a}
+            </foreach>
+        </if>
+    </select>
+
+</mapper>

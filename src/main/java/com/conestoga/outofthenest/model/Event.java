@@ -4,13 +4,14 @@ package com.conestoga.outofthenest.model;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 public class Event {
-    private Long id;
+    private String id;
     private String title;
     private String description;
     private LocalDateTime datetime;
-    private Double latitude;
-    private Double longitude;
+    private String address;
+    private List<String> targetAudience;
 }

@@ -7,7 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class EventService {
@@ -15,12 +17,19 @@ public class EventService {
     @Autowired
     private EventMapper eventMapper;
 
-    public Event createEvent(Event event) {
+    public void createEvent(Event event) {
+        event.setId("evt_" + UUID.randomUUID().toString().replace("-", "").substring(0, 8));
         eventMapper.insertEvent(event);
-        return event;
+        if (event.getTargetAudience() != null && !event.getTargetAudience().isEmpty()) {
+            eventMapper.insertAudienceTags(event.getId(), event.getTargetAudience());
+        }
     }
 
-    public List<Event> searchEvents(double lat, double lng, double radius, LocalDate startDate, LocalDate endDate) {
-        return eventMapper.searchEvents(lat, lng, radius, startDate, endDate);
+    public Event getEvent(String id) {
+        return eventMapper.getEventById(id);
+    }
+
+    public List<Event> searchEvents(LocalDateTime startDate, LocalDateTime endDate, List<String> audience) {
+        return eventMapper.searchEvents(startDate, endDate, audience);
     }
 }
