@@ -30,6 +30,11 @@ public class EventService {
     }
 
     public List<Event> searchEvents(LocalDateTime startDate, LocalDateTime endDate, List<String> audience) {
-        return eventMapper.searchEvents(startDate, endDate, audience);
+        List<Event> events = eventMapper.searchEvents(startDate, endDate, audience);
+        for (Event event : events) {
+            List<String> tags = eventMapper.getAudienceTags(event.getId());
+            event.setTargetAudience(tags);
+        }
+        return events;
     }
 }
