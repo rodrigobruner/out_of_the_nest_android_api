@@ -20,10 +20,8 @@ public class EventController {
     private EventService eventService;
 
     @PostMapping("/createEvent")
-    public String createEvent(@RequestBody Event event) {
-        System.out.println("xxx");
-        eventService.createEvent(event);
-        return "OK";
+    public Event createEvent(@RequestBody Event event) {
+        return eventService.createEvent(event);
     }
 
     @GetMapping("/getEvent")

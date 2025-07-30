@@ -17,12 +17,13 @@ public class EventService {
     @Autowired
     private EventMapper eventMapper;
 
-    public void createEvent(Event event) {
+    public Event createEvent(Event event) {
         event.setId("evt_" + UUID.randomUUID().toString().replace("-", "").substring(0, 8));
         eventMapper.insertEvent(event);
         if (event.getTargetAudience() != null && !event.getTargetAudience().isEmpty()) {
             eventMapper.insertAudienceTags(event.getId(), event.getTargetAudience());
         }
+        return event;
     }
 
     public Event getEvent(String id) {
