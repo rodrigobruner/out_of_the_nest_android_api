@@ -28,4 +28,13 @@ public interface EventMapper {
 
     @Select("SELECT audience_tag FROM event_audience WHERE event_id = #{eventId}")
     List<String> getAudienceTags(@Param("eventId") String eventId);
+
+    @Select("SELECT * FROM events")
+    @Results(id = "EventWithAudience", value = {
+            @Result(property = "id", column = "id"),
+            @Result(property = "targetAudience", column = "id",
+                    many = @Many(select = "getAudienceTags"))
+    })
+    List<Event> getAllEventsWithAudience();
+
 }
